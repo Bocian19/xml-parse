@@ -40,7 +40,7 @@ class Product
     /**
      * @ORM\Column(type="array")
      */
-    private $atributes = [];
+    private $attributes = [];
 
     /**
      * @ORM\Column(type="array")
@@ -100,14 +100,14 @@ class Product
         return $this;
     }
 
-    public function getAtributes(): ?array
+    public function getAttributes(): ?array
     {
-        return $this->atributes;
+        return $this->attributes;
     }
 
-    public function setAtributes(array $atributes): self
+    public function setAttributes(array $attributes): self
     {
-        $this->atributes = $atributes;
+        $this->attributes = $attributes;
 
         return $this;
     }

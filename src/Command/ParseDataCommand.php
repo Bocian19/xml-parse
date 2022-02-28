@@ -7,7 +7,7 @@ use SimpleXMLElement;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class ParseDataCommand extends Command
 {
@@ -22,29 +22,31 @@ class ParseDataCommand extends Command
         // ...
     }
 
+    private $doctrine;
+
+    public function __construct(ManagerRegistry $doctrine)
+    {
+        $this->doctrine = $doctrine;
+
+        parent::__construct();
+    }
+
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        echo('yes1');
-        function createProduct(ManagerRegistry $doctrine): Response
-        {
-            echo('yes2');
-            $entityManager = $doctrine->getManager();
+        $entityManager= $this->doctrine->getManager();
 
-            $product = new Product();
-            $product->setName('blab');
-            $product->setPrice('3');
-            $product->setQuantity('5');
-            $product->setDescription('ok');
-            $product->setAttributes([1,2]);
-            $product->setimages(['http1', 'http2', 'http3']);
+        $product = new Product();
+        $product->setName('blab');
+        $product->setPrice('3');
+        $product->setQuantity('5');
+        $product->setDescription('ok');
+        $product->setAttributes([1, 2]);
+        $product->setimages(['http1', 'http2', 'http3']);
 
 
-            $entityManager->persist($product);
-            $entityManager->flush();
-
-
-            return new Response('Saved new product with id ' . $product->getId());
-        }echo('yes3');
+        $entityManager->persist($product);
+        $entityManager->flush();
 
         // ... put here the code to create the user
 
@@ -53,9 +55,6 @@ class ParseDataCommand extends Command
 
         // return this if there was no problem running the command
         // (it's equivalent to returning int(0))
-
-
-
 
 
 //        $number_of_products = $xml_parsed->o->count();
@@ -103,7 +102,6 @@ class ParseDataCommand extends Command
 //                $images_array[] = $image_link;
 //                $i++;
 //            }
-
 
         return Command::SUCCESS;
 
